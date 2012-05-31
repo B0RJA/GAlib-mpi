@@ -5,7 +5,7 @@ Installation and usage
 ----------------------
 
 * Download [the latest release](https://github.com/B0RJA/GAlib-mpi/zipball/master).
-* Compile with `make`.
+* Compile with `make`(requires mpic++) .
 * Run the example: `mpirun -np 1 example seed 1234`
 
 The output must be:
