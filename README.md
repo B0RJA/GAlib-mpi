@@ -4,8 +4,8 @@ MPI Implementation of the Genetic Algorithm Library GAlib
 Installation and usage
 ----------------------
 
-* Download [the latest release](https://github.com/B0RJA/GAlib-mpi/zipball/master).
-* Compile with `make`(requires mpic++) .
+* Download [the latest release](https://github.com/B0RJA/GAlib-mpi/zipball/master)
+* Compile with `make` (requires mpic++)
 * Run the example: `mpirun -np 1 example seed 1234`
 
 The output must be:
@@ -13,7 +13,7 @@ The output must be:
     GA result:
     x = 7.861659, y = 7.861659
 
-Dive in the file `example.c` and then visit http://lancet.mit.edu/ga/ for detailed documentation.
+Dive in the library usage reading the example and visit http://lancet.mit.edu/ga/ for detailed documentation.
 
 Any problems?
 -------------
