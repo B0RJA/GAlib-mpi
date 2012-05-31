@@ -9,8 +9,8 @@ float objective(GAGenome &);
 
 int mpi_tasks, mpi_rank;
 
-int main(int argc, char **argv){
-
+int main(int argc, char **argv)
+{
 	// MPI init
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &mpi_tasks);
@@ -20,13 +20,10 @@ int main(int argc, char **argv){
 	// specify a random seed, the evolution will be exactly the same each time
 	// you use that seed number
 	unsigned int seed = 0;
-	for(int i=1; i<argc; i++) {
-		if(strcmp(argv[i++],"seed") == 0) {
+	for(int i=1 ; i<argc ; i++)
+		if(strcmp(argv[i++],"seed") == 0)
 			seed = atoi(argv[i]);
-		}
-	}
 	
-
 	// Declare variables for the GA parameters and set them to some default values.
 	int popsize  = 100; //Population
 	int ngen     = 100; //Generations
@@ -37,10 +34,7 @@ int main(int argc, char **argv){
 	popsize = mpi_tasks * int((double)popsize/(double)mpi_tasks+0.999);
 
 	// Create the phenotype for two variables.  The number of bits you can use to
-	// represent any number is limited by the type of computer you are using.  In
-	// this case, we use 16 bits to represent a floating point number whose value
-	// can range from -5 to 5, inclusive.  The bounds on x1 and x2 can be applied
-	// here and/or in the objective function.
+	// represent any number is limited by the type of computer you are using.
 	GABin2DecPhenotype map;
 	map.add(10, 0.0, 5.0 * M_PI);
 	map.add(10, 0.0, 5.0 * M_PI);
@@ -48,7 +42,7 @@ int main(int argc, char **argv){
 	// Create the template genome using the phenotype map we just made.
 	GABin2DecGenome genome(map, objective);
 
-	// Now -2.5*pi;create the GA using the genome and run it.  We'll use sigma truncation
+	// Now create the GA using the genome and run it. We'll use sigma truncation
 	// scaling so that we can handle negative objective scores.
 	GASimpleGA ga(genome);
 	GALinearScaling scaling;
@@ -58,12 +52,10 @@ int main(int argc, char **argv){
 	ga.pMutation(pmut);
 	ga.pCrossover(pcross);
 	ga.scaling(scaling);
-	if(mpi_rank == 0){
+	if(mpi_rank == 0)
 		ga.scoreFilename("evolution.txt");
-	}
-	else{
+	else
 		ga.scoreFilename("/dev/null");
-	}
 	ga.scoreFrequency(1);
 	ga.flushFrequency(1);
 	ga.selectScores(GAStatistics::AllScores);
@@ -72,7 +64,8 @@ int main(int argc, char **argv){
 	ga.evolve(seed);
 
 	// Dump the GA results to file
-	if(mpi_rank == 0){
+	if(mpi_rank == 0)
+	{
 		genome = ga.statistics().bestIndividual();
 		printf("GA result:\n");
 		printf("x = %f, y = %f\n",
@@ -82,16 +75,16 @@ int main(int argc, char **argv){
 	MPI_Finalize();
 
 	return 0;
-
 }
  
-float objective(GAGenome & c){
+float objective(GAGenome & c)
+{
 
 	GABin2DecGenome & genome = (GABin2DecGenome &)c;
 	double x, y, error;
 
-	x  = genome.phenotype(0);
-	y  = genome.phenotype(1);
+	x = genome.phenotype(0);
+	y = genome.phenotype(1);
 
 	error = ((1.-sin(x)*sin(y))+sqrt((x-M_PI*2.5)*(x-M_PI*2.5)+(y-M_PI*2.5)*(y-M_PI*2.5))/10.0)/2.5;
 
