@@ -1,4 +1,3 @@
-
 MPI Implementation of the Genetic Algorithm Library GAlib
 =================================================
 
@@ -21,4 +20,4 @@ Feel free to [write an issue](https://github.com/B0RJA/GAlib-mpi/issues) if you 
 
 Copyright and license
 ---------------------
-This library is based on GAlib, available under a BSD-style license found in the COPYRIGHT file.
+This library is based on [GAlib](http://lancet.mit.edu/ga/), available under a BSD-style license found in the COPYRIGHT file.
