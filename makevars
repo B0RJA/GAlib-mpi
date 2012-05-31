@@ -1,0 +1,9 @@
+LIB   =libga-mpi.a
+
+MKDEPEND    = makedepend
+RM          = rm -rf
+
+CXX         = mpic++
+CXXFLAGS    = -g -Wall
+LD          = mpic++ -w
+AR          = ar rv
