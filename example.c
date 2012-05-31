@@ -25,8 +25,8 @@ int main(int argc, char **argv)
 			seed = atoi(argv[i]);
 	
 	// Declare variables for the GA parameters and set them to some default values.
-	int popsize  = 100; //Population
-	int ngen     = 100; //Generations
+	int popsize  = 100; // Population
+	int ngen     = 100; // Generations
 	float pmut   = 0.03;
 	float pcross = 0.65;
 
@@ -35,6 +35,7 @@ int main(int argc, char **argv)
 
 	// Create the phenotype for two variables.  The number of bits you can use to
 	// represent any number is limited by the type of computer you are using.
+	// For this case we use 10 bits for each var, ranging the square domain [0,5*PI]x[0,5*PI]
 	GABin2DecPhenotype map;
 	map.add(10, 0.0, 5.0 * M_PI);
 	map.add(10, 0.0, 5.0 * M_PI);
@@ -59,6 +60,7 @@ int main(int argc, char **argv)
 	ga.scoreFrequency(1);
 	ga.flushFrequency(1);
 	ga.selectScores(GAStatistics::AllScores);
+	// Pass MPI data to the GA class
 	ga.mpi_rank(mpi_rank);
 	ga.mpi_tasks(mpi_tasks);
 	ga.evolve(seed);
@@ -77,18 +79,17 @@ int main(int argc, char **argv)
 	return 0;
 }
  
-float objective(GAGenome & c)
+float objective(GAGenome &c)
 {
-
-	GABin2DecGenome & genome = (GABin2DecGenome &)c;
-	double x, y, error;
+	GABin2DecGenome &genome = (GABin2DecGenome &)c;
+	float x, y, error;
 
 	x = genome.phenotype(0);
 	y = genome.phenotype(1);
 
+	// Function with local minima. The lowest is located at (5/2*PI, 5/2*PI)
 	error = ((1.-sin(x)*sin(y))+sqrt((x-M_PI*2.5)*(x-M_PI*2.5)+(y-M_PI*2.5)*(y-M_PI*2.5))/10.0)/2.5;
 
-	return (float) error;
-
+	return error;
 }
 
