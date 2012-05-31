@@ -13,6 +13,8 @@ The output must be:
     GA result:
     x = 7.861659, y = 7.861659
 
+Dive in the file `example.c` and then visit http://lancet.mit.edu/ga/ for detailed documentation.
+
 Any problems?
 -------------
 Feel free to [write an issue](https://github.com/B0RJA/GAlib-mpi/issues) if you have any questions or problems.
